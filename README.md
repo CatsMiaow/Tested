@@ -16,7 +16,8 @@ $ mv node_modules/ vendor/
 ```
 
 #### 이슈
-browserify에서 tinymce 에디터가 호환되지 않는 [문제](https://github.com/tinymce/tinymce-dist/issues/11#issuecomment-148003131)가 있습니다.
+tinymce 에디터의 한글 언어팩을 추가해야 합니다. [다운로드](http://www.tinymce.com/i18n/download.php?download=ko)<br/>
+그리고 browserify에서 tinymce 에디터가 호환되지 않는 [문제](https://github.com/tinymce/tinymce-dist/issues/11#issuecomment-148003131)가 있습니다.
 ```javascript
 // public/vendor/tinymce.js, tinymce.min.js
 // 맨 마지막 끝 코드를 this에서 window로 수정해야 합니다.
