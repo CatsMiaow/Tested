@@ -15,6 +15,19 @@ $ npm install
 $ mv node_modules/ vendor/
 ```
 
+#### 이슈
+browserify에서 tinymce 에디터가 호환되지 않는 [문제](https://github.com/tinymce/tinymce-dist/issues/11#issuecomment-148003131)가 있습니다.
+```javascript
+// public/vendor/tinymce.js, tinymce.min.js
+// 맨 마지막 끝 코드를 this에서 window로 수정해야 합니다.
+
+// before
+})(this);
+
+// after
+})(window);
+```
+
 #### 데이터 폴더 생성
 ```
 +-- public
