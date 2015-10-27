@@ -24,33 +24,10 @@ $ mv node_modules/ vendor/
 |   |   +-- temp
 ```
 
-### 샘플 게시판 생성
-```json
-/* 0: 회원가입 후 User level을 10으로 조정해야 글쓰기 가능 */
-{
-    "_id" : "notice",
-    "title" : "공지사항",
-    "commentCount" : 0,
-    "writeCount" : 0,
-    "skin" : "basic",
-    "commentLevel" : 1,
-    "writeLevel" : 10,
-    "readLevel" : 1,
-    "listLevel" : 1
-}
-/* 1: 비회원 쓰기 기능은 없음 */
-{
-    "_id" : "talk",
-    "title" : "자유게시판",
-    "commentCount" : 0,
-    "writeCount" : 0,
-    "skin" : "basic",
-    "commentLevel" : 2,
-    "writeLevel" : 2,
-    "readLevel" : 1,
-    "listLevel" : 1
-}
-```
+#### 기본 데이터 생성
+http://domain.com:8001/init 실행
+> 공지사항, 일반게시판, 관리자 아이디 추가<br/>
+> [init function](server/controllers/index.js#L27) 소스 참고
 
 #### 빌드
 ```javascript
