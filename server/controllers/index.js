@@ -23,7 +23,42 @@ var indexControllers = {
         }
         
         res.render('index');
-    }
+    },
+    init: function(req, res) {
+        var mongoose = require('mongoose')
+          , Board = mongoose.model('Board')
+          , User = mongoose.model('User')
+          , Q = require('q');
+
+        Board.where('_id').in(['notice', 'talk']).exec('count').then(function(count) {
+            if (count > 0) {
+                throw new Error('Already Exists.');
+            }
+            // 기본 게시판, 관리자 추가
+            return Q.all([
+                new Board({
+                    _id: 'notice',
+                    title: '공지사항',
+                    writeLevel: 10
+                }).save(),
+                new Board({
+                    _id: 'talk',
+                    title: '자유게시판'
+                }).save(),
+                new User({
+                    _id: 'admin',
+                    level: 10,
+                    nickname: '관리자',
+                    email: 'admin@tested.co.kr',
+                    password: 'password'
+                }).save()
+            ]);
+        }).then(function(result) {
+            res.json(result);
+        }).then(null, function(err) {
+            res.json(err.message);
+        });
+   }
 };
 
 

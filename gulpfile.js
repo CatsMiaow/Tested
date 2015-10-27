@@ -26,13 +26,13 @@ gulp.task('javascript', function () {
     return b.bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true}))
+        //.pipe(sourcemaps.init({loadMaps: true}))
             // Add transformation tasks to the pipeline here.
             .on('error', gutil.log)
             .pipe(uglify())
             .pipe(rev())
             //.pipe(ngAnnotate())
-        .pipe(sourcemaps.write('./'))
+        //.pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./public/'))
         .pipe(rev.manifest('manifest.json'))
         .pipe(gulp.dest('./'));

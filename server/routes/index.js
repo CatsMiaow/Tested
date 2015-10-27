@@ -14,6 +14,9 @@ module.exports = function(router) {
     // 서버 상태 체크
     router.get('/health', index.health);
 
+    // 초기 설치 데이터 세팅
+    router.get('/init', index.init);
+
     // AngularJS html5Mode
     router.get('/*', index.html5Mode);
 };
