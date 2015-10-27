@@ -1,0 +1,75 @@
+a:hover, a:focus {
+   text-decoration: underline;
+}
+
+#container {
+    visibility: hidden;
+}
+
+#ie-warning {
+    position: absolute;
+    z-index: 1024;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background: #fff;
+}
+
+/* write content */
+.content p {
+    margin: 0; }
+.content img {
+    max-width: 100%; }
+
+.gray { color: gray; }
+
+/* small icon button */
+.md-button.md-icon-button.md-mini {
+    line-height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+}
+
+/*md-menu*/
+md-menu-item.menu-divider {
+    border-bottom: 1px solid rgba(0,0,0,0.12); }
+
+/*label-color*/
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em; }
+.label-default, .label-log {
+    background-color: #777; }
+.label-primary, .label-dir {
+    background-color: #337ab7; }
+.label-success, .label-debug {
+    background-color: #5cb85c; }
+.label-info {
+    background-color: #5bc0de; }
+.label-warning, .label-warn {
+    background-color: #f0ad4e; }
+.label-danger, .label-error, .label-exception {
+    background-color: #d9534f; }
+.label-vertical {
+    padding-top: 5px; }
+.label > md-icon {
+    height: inherit; }
+
+
+/* write file list */
+@media (min-width: 600px) {
+    .list-item-float {
+        float: left;
+        width: 25%;
+    }
+}

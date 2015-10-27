@@ -1,0 +1,21 @@
+div(layout="row" layout-sm="column")
+  md-list(flex)
+    md-subheader.md-no-sticky.md-accent 공지사항
+    md-list-item.md-2-line(ng-repeat="item in notice" ng-click="viewDetail('notice', item._id)")
+      div.md-list-item-text
+        h3 {{item.title}} 
+        p.md-caption ({{item.commentCount}}) - {{item.created | momentFromNow}}
+      md-divider
+    md-subheader.md-no-sticky.md-accent 자유게시판
+    md-list-item.md-2-line(ng-repeat="item in talk" ng-click="viewDetail('talk', item._id)")
+      div.md-list-item-text
+        h3 {{item.title}} 
+        p.md-caption ({{item.commentCount}}) - {{item.created | momentFromNow}}
+      md-divider
+  md-list(flex)
+    md-subheader.md-no-sticky.md-accent 댓글
+    md-list-item.md-2-line(ng-repeat="item in comment" ng-click="viewDetail(item.board, item.write, item._id)")
+      div.md-list-item-text
+        h3 {{item.content}} 
+        p.md-caption {{item.created | momentFromNow}}
+      md-divider

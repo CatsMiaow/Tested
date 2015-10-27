@@ -1,0 +1,34 @@
+div(layout="row")
+  md-input-container(md-no-float)
+    md-icon.fa.fa-lg(md-font-icon="fa-search")
+    input(ng-model="search.text" maxlength="15" ng-enter="pageChanged()" placeholder="Search after Enter")
+  md-button.md-icon-button(ng-show="search.text && search.page" ng-click="resetSearch()" aria-label="처음으로")
+    md-icon.fa.fa-lg(md-font-icon="fa-undo")
+  span(flex)
+  md-button(md-no-ink aria-label="글수")
+    md-icon.fa.fa-lg(md-font-icon="fa-list-alt")
+    | &nbsp;{{total}}
+  md-button.md-icon-button.md-primary(ng-href="board/{{boardId}}/write" ng-if="isWrite" aria-label="작성")
+    md-icon.fa.fa-lg(md-font-icon="fa-pencil")
+
+md-divider
+
+md-list
+  md-list-item.md-2-line(ng-repeat="write in list" ng-click="viewDetail(write._id)")
+    div.md-list-item-text
+      h3 {{write.title}} 
+        small.md-caption ({{write.commentCount}})
+      p.md-caption {{orderNo - $index}} / {{write.name}} / {{write.created | momentFromNow}} 작성 / {{write.updated | momentFromNow}} 수정 / 조회 {{write.hits}} 
+        md-icon.fa.fa-lg(ng-show="write.fileCount" md-font-icon="fa-picture-o")
+    md-divider
+
+div(layout="row" ng-if="page.last")
+  md-button.md-icon-button(ng-click="pageChanged()" aria-label="처음" ng-disabled="page.current <= 1")
+    md-icon.fa.fa-lg(md-font-icon="fa-fast-backward")
+  md-button.md-icon-button(ng-click="pageChanged(-1)" aria-label="이전" ng-disabled="page.current <= 1")
+    md-icon.fa.fa-lg(md-font-icon="fa-step-backward")
+  span(layout="row" layout-align="center center" flex) {{page.current}}/{{page.last}}
+  md-button.md-icon-button(ng-click="pageChanged(+1)" aria-label="다음" ng-disabled="page.current >= page.last")
+    md-icon.fa.fa-lg(md-font-icon="fa-step-forward")
+  md-button.md-icon-button(ng-click="pageChanged(page.last)" aria-label="마지막" ng-disabled="page.current >= page.last")
+    md-icon.fa.fa-lg(md-font-icon="fa-fast-forward")
