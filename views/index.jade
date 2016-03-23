@@ -48,12 +48,9 @@ html(ng-controller="CommonCtrl" xmlns="http://www.w3.org/1999/xhtml" xml:lang="k
               md-icon.fa.fa-lg(md-font-icon="fa-sign-in")
             md-button.md-icon-button(ng-href="user/join" ng-hide="isLogin" aria-label="회원가입")
               md-icon.fa.fa-lg(md-font-icon="fa-user-plus")
-            md-button.md-fab.md-accent.md-mini
+            md-button.md-fab.md-accent.md-mini(aria-label="접속자수")
               | {{userCount}}
 
         md-content(layout-wrap layout-padding ng-view)
-
-        //- md-button.md-icon-button.md-fab.md-fab-bottom-right.md-primary(ng-click="showBottomSheet($event)" aria-label="북마크")
-        //-   md-icon.fa.fa-lg(md-font-icon="fa-bookmark-o")
         
-    script(src="bundle.js" type="text/javascript")
+    script(src="#{bundle}" type="text/javascript")

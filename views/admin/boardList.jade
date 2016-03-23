@@ -1,0 +1,21 @@
+md-toolbar
+  div.md-toolbar-tools
+    span(flex)
+    md-button(md-no-ink aria-label="게시판수")
+      md-icon.fa.fa-lg(md-font-icon="fa-list-alt")
+      | &nbsp;{{total}}
+    md-button.md-icon-button(ng-href="board/write" aria-label="등록")
+      md-icon.fa.fa-lg(md-font-icon="fa-pencil")
+
+md-list
+  md-list-item.md-2-line(ng-repeat="item in list" ng-click="boardDetail(item._id)")
+    div.md-list-item-text
+      h3 {{item.title}} 
+        small.md-caption {{item._id}}
+      p.md-caption
+        | {{orderNo - $index}} / {{item.skin}} / 
+        | LL:{{item.listLevel}}, RL:{{item.readLevel}}, WL:{{item.writeLevel}}, CL:{{item.commentLevel}} / 
+        | WC:{{item.writeCount}}, CC:{{item.commentCount}} / {{item.created | amTimeAgo}} 등록 / {{item.updated | amTimeAgo}} 수정 
+    md-divider
+
+pagination(page="page" changed="pageChanged(page)")

@@ -1,0 +1,12 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "no-unused-expressions": 0 // foo.should.to.exist;
+  },
+  "globals": {
+    "should": true, // chai.should();
+    "request": true // supertest();
+  }
+}

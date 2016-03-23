@@ -1,4 +1,4 @@
-div(layout="row" layout-sm="column")
+div(layout="column" layout-gt-sm="row")
   span.md-title {{view.title}}
   span(flex)
   span
@@ -7,7 +7,7 @@ div(layout="row" layout-sm="column")
       | &nbsp;{{view.name}}
     md-button(md-no-ink aria-label="작성일")
       md-icon.fa.fa-lg(md-font-icon="fa-clock-o")
-      | &nbsp;{{view.created | momentFromNow}}
+      | &nbsp;{{view.created | amTimeAgo}}
     md-button(md-no-ink aria-label="조회수")
       md-icon.fa.fa-lg(md-font-icon="fa-eye")
       | &nbsp;{{view.hits}}
@@ -39,7 +39,7 @@ section(layout-margin)
       md-icon.fa.fa-rotate-180(md-font-icon="fa-reply")
     div(flex)
       span.md-caption
-        | {{item.name}} &nbsp;{{item.updated | momentFromNow}}
+        | {{item.name}} &nbsp;{{item.updated | amTimeAgo}}
       div.md-body-1(layout="row")
         p 
           span.md-caption.gray(ng-if="item.reply.depth > 1") {{item.reply.name}} &nbsp;
@@ -53,9 +53,8 @@ section(layout-margin)
           md-button.md-icon-button.md-warn.md-mini(ng-if="!item.isDel || !item.replyCount" ng-click="removeComment(item, $index)" aria-label="삭제")
             md-icon.fa(md-font-icon="fa-times")
       md-divider
-  br
 
-  form(name="form" layout="row" layout-sm="column" ng-if="isComment" ng-submit="saveComment()")
+  form(name="form" layout="column" layout-gt-sm="row" ng-if="isComment" ng-submit="saveComment()")
     md-input-container(flex)
       label 댓글
       textarea(ng-model="comment.content" columns="1" md-maxlength="150" focus="actionIndex")
@@ -67,13 +66,4 @@ section(layout-margin)
       md-button.md-icon-button.md-raised.md-warn(type="button" ng-show="action" ng-click="resetComment()" aria-label="되돌리기")
         md-icon.fa.fa-lg(md-font-icon="fa-undo")
 
-  div(layout="row" ng-if="coPage")
-    md-button.md-icon-button(ng-click="pageChanged()" aria-label="처음" ng-disabled="coPage.current <= 1")
-      md-icon.fa.fa-lg(md-font-icon="fa-fast-backward")
-    md-button.md-icon-button(ng-click="pageChanged(-1)" aria-label="이전" ng-disabled="coPage.current <= 1")
-      md-icon.fa.fa-lg(md-font-icon="fa-step-backward")
-    span(layout="row" layout-align="center center" flex) {{coPage.current}}/{{coPage.last}}
-    md-button.md-icon-button(ng-click="pageChanged(+1)" aria-label="다음" ng-disabled="coPage.current >= coPage.last")
-      md-icon.fa.fa-lg(md-font-icon="fa-step-forward")
-    md-button.md-icon-button(ng-click="pageChanged(coPage.last)" aria-label="마지막" ng-disabled="coPage.current >= coPage.last")
-      md-icon.fa.fa-lg(md-font-icon="fa-fast-forward")
+  pagination(page="coPage" changed="pageChanged(page)")

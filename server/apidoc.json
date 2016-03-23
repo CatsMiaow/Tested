@@ -1,0 +1,19 @@
+{
+  "name": "Tested-apiDoc",
+  "description": "Tested. API Documentation",
+  "title": "Tested-apiDoc",
+  "url" : "http://tested.co.kr/v",
+  "header": {
+    "title": "Intro",
+    "filename": "apidoc.header.md"
+  },
+  "order": [
+    "Admin",
+    "User",
+    "Board_Write"
+  ],
+  "template": {
+  	"withCompare": false,
+  	"withGenerator": true
+  }
+}

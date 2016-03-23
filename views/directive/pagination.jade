@@ -1,0 +1,10 @@
+div(layout="row" ng-if="$ctrl.page.last")
+  md-button.md-icon-button(ng-click="$ctrl.paging()" aria-label="처음" ng-disabled="$ctrl.page.current <= 1")
+    md-icon.fa.fa-lg(md-font-icon="fa-fast-backward")
+  md-button.md-icon-button(ng-click="$ctrl.paging(-1)" aria-label="이전" ng-disabled="$ctrl.page.current <= 1")
+    md-icon.fa.fa-lg(md-font-icon="fa-step-backward")
+  span(layout="row" layout-align="center center" flex) {{$ctrl.page.current}}/{{$ctrl.page.last}}
+  md-button.md-icon-button(ng-click="$ctrl.paging(+1)" aria-label="다음" ng-disabled="$ctrl.page.current >= $ctrl.page.last")
+    md-icon.fa.fa-lg(md-font-icon="fa-step-forward")
+  md-button.md-icon-button(ng-click="$ctrl.paging($ctrl.page.last)" aria-label="마지막" ng-disabled="$ctrl.page.current >= $ctrl.page.last")
+    md-icon.fa.fa-lg(md-font-icon="fa-fast-forward")

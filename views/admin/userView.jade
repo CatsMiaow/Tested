@@ -1,0 +1,34 @@
+md-list
+  md-list-item
+    span.label.label-primary 아이디
+    p {{user._id}}
+  md-divider
+  
+  md-list-item
+    span.label.label-success 레벨
+    p {{user.level}}
+  md-list-item
+    span.label.label-success 별명
+    p {{user.nickname}}
+  md-list-item
+    span.label.label-success 이메일
+    p {{user.email}}
+  md-divider
+  
+  md-list-item
+    span.label.label-info 아이피
+    p {{user.ip}}
+  md-list-item
+    span.label.label-info 로그인 날짜
+    p {{user.logined | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}
+  md-list-item
+    span.label.label-info 로그인 아이피
+    p {{user.loginip || '-'}}
+  md-divider
+  
+  md-list-item
+    span.label.label-warning 가입일
+    p {{user.created | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}
+  md-list-item
+    span.label.label-default 정보 수정일
+    p {{user.updated | amDateFormat:'YYYY-MM-DD HH:mm:ss'}}
