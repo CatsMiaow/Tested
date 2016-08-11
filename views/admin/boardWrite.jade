@@ -1,41 +1,41 @@
-form(name="form" ng-submit="save()")
-  md-input-container.md-block(ng-if="board.isNew")
+form(name="vm.form" ng-submit="vm.save()")
+  md-input-container.md-block(ng-if="vm.board.isNew")
     label 아이디
-    input(type="text" name="_id" ng-model="board._id" checker="unique" 
+    input(type="text" name="_id" ng-model="vm.board._id" checker="unique" 
           md-maxlength="15" ng-pattern="/^[a-z0-9]{4,15}$/", required)
-    div(ng-messages="form._id.$error" ng-show="form._id.$dirty")
+    div(ng-messages="vm.form._id.$error" ng-show="vm.form._id.$dirty")
       div(ng-message="pattern") 아이디는 영문/숫자 4~15자리로 입력하세요.
       div(ng-message="unique") 이미 등록된 아이디입니다.
 
   md-input-container.md-block
     label 제목
-    input(type="text" name="title" ng-model="board.title"
+    input(type="text" name="title" ng-model="vm.board.title"
           ng-minlength="2" md-maxlength="15" ng-trim="true", required)
-    div(ng-messages="form.title.$error" ng-show="form.title.$dirty")
+    div(ng-messages="vm.form.title.$error" ng-show="vm.form.title.$dirty")
       div(ng-message="minlength,maxlength") 제목은 2~15자리로 입력하세요.
 
   md-input-container
     label 스킨
-    md-select(ng-model="board.skin")
+    md-select(ng-model="vm.board.skin")
       md-option(value="basic", selected) Basic
   md-input-container
     label Lv.목록
-    md-select(ng-model="board.listLevel")
-      md-option(ng-repeat="lv in range(1,10)" ng-value="lv") {{lv}}
+    md-select(ng-model="vm.board.listLevel")
+      md-option(ng-repeat="lv in vm.range(1,10)" ng-value="lv") {{lv}}
   md-input-container
     label Lv.보기
-    md-select(ng-model="board.readLevel")
-      md-option(ng-repeat="lv in range(1,10)" ng-value="lv") {{lv}}
+    md-select(ng-model="vm.board.readLevel")
+      md-option(ng-repeat="lv in vm.range(1,10)" ng-value="lv") {{lv}}
   md-input-container
     label Lv.쓰기
-    md-select(ng-model="board.writeLevel")
-      md-option(ng-repeat="lv in range(2,10)" ng-value="lv") {{lv}}
+    md-select(ng-model="vm.board.writeLevel")
+      md-option(ng-repeat="lv in vm.range(2,10)" ng-value="lv") {{lv}}
   md-input-container
     label Lv.댓글
-    md-select(ng-model="board.commentLevel")
-      md-option(ng-repeat="lv in range(2,10)" ng-value="lv") {{lv}}
+    md-select(ng-model="vm.board.commentLevel")
+      md-option(ng-repeat="lv in vm.range(2,10)" ng-value="lv") {{lv}}
 
   br
 
   div(layout="column")
-    md-button.md-raised.md-primary(type="submit" ng-disabled="form.$invalid") 확인
+    md-button.md-raised.md-primary(type="submit" ng-disabled="vm.form.$invalid") 확인

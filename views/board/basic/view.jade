@@ -1,69 +1,64 @@
 div(layout="column" layout-gt-sm="row")
-  span.md-title {{view.title}}
+  span.md-title {{vm.view.data.title}}
   span(flex)
   span
     md-button(md-no-ink aria-label="글쓴이")
       md-icon.fa.fa-lg(md-font-icon="fa-user")
-      | &nbsp;{{view.name}}
+      | &nbsp;{{vm.view.data.name}}
     md-button(md-no-ink aria-label="작성일")
       md-icon.fa.fa-lg(md-font-icon="fa-clock-o")
-      | &nbsp;{{view.created | amTimeAgo}}
+      | &nbsp;{{vm.view.data.created | amTimeAgo}}
     md-button(md-no-ink aria-label="조회수")
       md-icon.fa.fa-lg(md-font-icon="fa-eye")
-      | &nbsp;{{view.hits}}
+      | &nbsp;{{vm.view.data.hits}}
 
 md-divider
 
-div.content(layout-wrap layout-margin ng-bind-html="view.content")
+div.content(layout-wrap layout-margin ng-bind-html="vm.view.data.content")
 
 md-divider
 
 div(layout="row")
   md-button.md-icon-button(go-back aria-label="뒤로")
     md-icon.fa.fa-lg(md-font-icon="fa-arrow-left")
-  md-button.md-icon-button(ng-href="board/{{view.board}}/write/{{view._id}}" ng-if="isOwner" aria-label="수정")
+  md-button.md-icon-button(ng-href="board/{{vm.view.data.board}}/write/{{vm.view.data._id}}" ng-if="vm.isOwner" aria-label="수정")
     md-icon.fa.fa-lg(md-font-icon="fa-pencil-square-o")
-  md-button.md-icon-button.md-warn(ng-click="remove()" ng-if="isOwner" aria-label="삭제")
+  md-button.md-icon-button.md-warn(ng-click="vm.remove()" ng-if="vm.isOwner" aria-label="삭제")
     md-icon.fa.fa-lg(md-font-icon="fa-trash")
   span(flex)
-  md-button.md-icon-button.md-primary(ng-href="board/{{view.board}}/write" ng-if="isWrite" aria-label="글쓰기")
+  md-button.md-icon-button.md-primary(ng-href="board/{{vm.view.data.board}}/write" ng-if="vm.isWrite" aria-label="글쓰기")
     md-icon.fa.fa-lg(md-font-icon="fa-pencil")
       
 md-divider
 
-section(layout-margin)
+md-list
   md-subheader.md-no-sticky.md-accent Comments
-    small ({{view.commentCount}})
-  div(layout="row" ng-repeat="item in view.comments" id="c{{item._id}}")
-    div(layout-padding ng-if="item.reply")
-      md-icon.fa.fa-rotate-180(md-font-icon="fa-reply")
-    div(flex)
-      span.md-caption
-        | {{item.name}} &nbsp;{{item.updated | amTimeAgo}}
-      div.md-body-1(layout="row")
-        p 
-          span.md-caption.gray(ng-if="item.reply.depth > 1") {{item.reply.name}} &nbsp;
-          | {{item.content}}
-        span(flex)
-        md-button.md-icon-button.md-accent.md-mini(ng-if="isComment" ng-click="replyComment(item, $index)" aria-label="답글")
-          md-icon.fa(md-font-icon="fa-reply")
-        span(ng-if="item.isOwner")
-          md-button.md-icon-button.md-accent.md-mini(ng-if="!item.isDel && !item.replyCount" ng-click="modifyComment(item, $index)" aria-label="수정")
-            md-icon.fa(md-font-icon="fa-pencil-square-o")
-          md-button.md-icon-button.md-warn.md-mini(ng-if="!item.isDel || !item.replyCount" ng-click="removeComment(item, $index)" aria-label="삭제")
-            md-icon.fa(md-font-icon="fa-times")
-      md-divider
+    small ({{vm.view.data.commentCount}})
+  md-list-item.md-2-line(ng-repeat="item in vm.view.data.comments" id="c{{item._id}}")
+    md-icon.fa.fa-rotate-180.md-avatar(md-font-icon="fa-reply" ng-if="item.reply")
 
-  form(name="form" layout="column" layout-gt-sm="row" ng-if="isComment" ng-submit="saveComment()")
+    div.md-list-item-text
+      p: span.md-caption {{item.name}} &nbsp;{{item.updated | amTimeAgo}}
+      span.md-caption.gray(ng-if="item.reply.depth > 1") {{item.reply.name}} &nbsp;
+      | {{item.content}}
+
+    md-icon.fa.md-secondary.md-accent(md-font-icon="fa-reply" ng-if="vm.isComment" ng-click="vm.replyComment(item, $index)" aria-label="답글")
+    md-icon.fa.md-secondary.md-accent(md-font-icon="fa-pencil-square-o" ng-if="item.isOwner && (!item.isDel && !item.replyCount)" ng-click="vm.modifyComment(item, $index)" aria-label="수정")
+    md-icon.fa.md-secondary.md-warn(md-font-icon="fa-times" ng-if="item.isOwner && (!item.isDel || !item.replyCount)" ng-click="vm.removeComment(item, $index)" aria-label="삭제")
+    md-divider
+  
+  br
+  form(name="form" layout="column" layout-gt-sm="row" ng-if="vm.isComment" ng-submit="vm.saveComment()")
     md-input-container(flex)
       label 댓글
-      textarea(ng-model="comment.content" columns="1" md-maxlength="150" focus="actionIndex")
+      textarea(ng-model="vm.comment.content" columns="1" md-maxlength="150" focus="vm.actionIndex")
     div(layout="row" layout-align="start center")
-      md-button.md-icon-button.md-raised(type="submit" ng-class="{'md-primary': !action, 'md-accent': action}" ng-disabled="!comment.content" aria-label="댓글")
-        md-icon.fa.fa-lg(md-font-icon="fa-comment" ng-hide="action")
-        md-icon.fa.fa-lg(md-font-icon="fa-pencil-square-o" ng-show="action == 'modify'")
-        md-icon.fa.fa-lg(md-font-icon="fa-reply"  ng-show="action == 'reply'")
-      md-button.md-icon-button.md-raised.md-warn(type="button" ng-show="action" ng-click="resetComment()" aria-label="되돌리기")
+      md-button.md-icon-button.md-raised(type="submit" ng-class="{'md-primary': !vm.action, 'md-accent': vm.action}" ng-disabled="!vm.comment.content" aria-label="댓글")
+        md-icon.fa.fa-lg(md-font-icon="fa-comment" ng-hide="vm.action")
+        md-icon.fa.fa-lg(md-font-icon="fa-pencil-square-o" ng-show="vm.action == 'modify'")
+        md-icon.fa.fa-lg(md-font-icon="fa-reply"  ng-show="vm.action == 'reply'")
+      md-button.md-icon-button.md-raised.md-warn(type="button" ng-show="vm.action" ng-click="vm.resetComment()" aria-label="되돌리기")
         md-icon.fa.fa-lg(md-font-icon="fa-undo")
 
-  pagination(page="coPage" changed="pageChanged(page)")
+  br
+  pagination(page="vm.coPage" changed="vm.pageChanged(page)")

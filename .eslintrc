@@ -1,8 +1,6 @@
 {
-  "extends": "airbnb/legacy",
+  "extends": "airbnb-base",
   "rules": {
-    "strict": [2, "global"],
-    // https://github.com/airbnb/javascript/search?utf8=%E2%9C%93&q=new-cap&type=Code
     // add capIsNewExceptions
     "new-cap": [2, {
       "newIsCap": true,
@@ -10,8 +8,11 @@
     }],
     // req.foo = var; $scope.foo = var;
     "no-param-reassign": [2, { "props": false }],
-    // "consistent-return": 2, // 이거 불편함
-    "func-names": 0,
-    "no-console": 0
+    // add allow, Mongoose Object
+    "no-underscore-dangle": [2, { "allowAfterThis": false, "allow": ["_id", "_update"] }],
+    "consistent-return": 0, // require return
+    "func-names": 0, // const fnName = function fnName() {}
+    "no-console": 0 // console.*
+    // "import/no-extraneous-dependencies": [2, { "devDependencies": true, "optionalDependencies": false }]
   }
 }

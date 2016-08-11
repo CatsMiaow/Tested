@@ -1,12 +1,11 @@
-'use strict';
+import chai from 'chai';
+import supertest from 'supertest';
 
-var config;
+import config from '../../src/server/config';
 
 // 테스트 환경변수
 process.env.NODE_ENV = 'test';
 
-config = require('../../server/config');
-
 // 테스트에서 사용할 공통 모듈
-global.should = require('chai').should();
-global.request = require('supertest').agent('http://localhost:' + config.port + '/v');
+global.should = chai.should();
+global.request = supertest.agent(`http://localhost:${config.port}/v`);

@@ -1,10 +1,10 @@
-form(name="form" ng-submit="login()")
+form(name="form" ng-submit="vm.login()")
   md-input-container.md-block
     label 아이디
-    input(type="text" name="id" ng-model="user.id" ng-pattern="/^[a-z0-9]{4,15}$/", required)
+    input(type="text" name="id" ng-model="vm.user.id" ng-pattern="/^[a-z0-9]{4,15}$/", required)
   md-input-container.md-block
     label 비밀번호
-    input(type="password" name="password" ng-model="user.password" ng-minlength="6", required)
+    input(type="password" name="password" ng-model="vm.user.password" ng-minlength="6", required)
 
   div(layout="column")
     md-button.md-raised.md-primary(type="submit" ng-disabled="form.$invalid") 로그인

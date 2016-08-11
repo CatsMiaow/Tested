@@ -1,42 +1,41 @@
-'use strict';
+import fs from 'fs';
+import mongoose from 'mongoose';
+import config from '../src/server/config';
 
-var fs = require('fs');
-var mongoose = require('mongoose');
-var mongodb;
+
+let mongodb;
 
 // 테스트 전 초기화 작업
-describe('Initialize', function () {
-  before(function (done) {
-    var config = require('../server/config');
-
+describe('Initialize', () => {
+  before(done => {
     // MongoDB Connect
     mongodb = mongoose.createConnection(config.mongo.uri);
-    mongodb.on('connected', function () {
+    mongodb.on('connected', () => {
       done();
-    }).on('error', function (err) {
+    }).on('error', err => {
       done(err);
     });
   });
 
-  after(function () {
+  after(() => {
     mongodb.close();
   });
 
-  it('mocha users clear', function (done) {
+  it('mocha users clear', done => {
     mongodb.collection('users').remove({ _id: 'mocha' }, done);
   });
 
-  it('mocha boards clear', function (done) {
-    fs.rmdir('public/data/file/mocha', function () { // 파일 폴더 삭제
+  it('mocha boards clear', done => {
+    fs.rmdir('resource/public/data/file/mocha', () => { // 파일 폴더 삭제
       mongodb.collection('boards').remove({ _id: 'mocha' }, done);
     });
   });
 
-  it('mocha writes clear', function (done) {
+  it('mocha writes clear', done => {
     mongodb.collection('writes').remove({ board: 'mocha' }, done);
   });
 
-  it('mocha comments clear', function (done) {
+  it('mocha comments clear', done => {
     mongodb.collection('comments').remove({ board: 'mocha' }, done);
   });
 });

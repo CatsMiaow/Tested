@@ -1,25 +1,32 @@
 md-toolbar
   div.md-toolbar-tools
-    md-input-container(md-no-float)
-      input(ng-model="search.text" maxlength="15" ng-enter="pageChanged()" placeholder="검색어")
-    md-button.md-icon-button(ng-disabled="!search.text" ng-click="pageChanged()" aria-label="검색")
-      md-icon.fa.fa-lg(md-font-icon="fa-search")
-    md-button.md-icon-button(ng-show="search.text && search.page" ng-click="resetSearch()" aria-label="처음으로")
+    md-button.md-icon-button(ng-click="showSearch = !showSearch" aria-label="검색바")
+      md-icon.fa.fa-lg(md-font-icon="fa-search-plus" ng-class="{'fa-search-plus': !showSearch, 'fa-search-minus': showSearch }")
+    md-button.md-icon-button(ng-show="vm.search.text && vm.search.page" ng-click="vm.resetSearch()" aria-label="처음으로")
       md-icon.fa.fa-lg(md-font-icon="fa-undo")
     span(flex)
     md-button(md-no-ink aria-label="글수")
       md-icon.fa.fa-lg(md-font-icon="fa-list-alt")
-      | &nbsp;{{total}}
-    md-button.md-icon-button(ng-href="board/{{boardId}}/write" ng-if="isWrite" aria-label="작성")
+      | &nbsp;{{vm.total}}
+    md-button.md-fab.md-mini(ng-href="board/{{vm.boardId}}/write" ng-if="vm.isWrite" aria-label="작성")
       md-icon.fa.fa-lg(md-font-icon="fa-pencil")
 
+
+div(layout-padding ng-show="showSearch" md-colors="::{ background: 'primary-50' }")
+  md-input-container.md-block(md-no-float)
+    md-icon.fa.fa-lg(md-font-icon="fa-search")
+    input(ng-model="vm.search.text" maxlength="15" ng-enter="vm.pageChanged()" placeholder="검색어 입력 후 엔터")
+  //- div(layout="row")
+  //-   span(flex)
+  //-   md-button.md-raised.md-accent(ng-click="vm.pageChanged()" aria-label="검색") 검색
+
 md-list
-  md-list-item.md-2-line(ng-repeat="write in list" ng-click="viewDetail(write._id)")
+  md-list-item.md-2-line(ng-repeat="write in vm.list" ng-click="vm.viewDetail(write._id)")
     div.md-list-item-text
       h3 {{write.title}} 
         small.md-caption ({{write.commentCount}})
-      p.md-caption {{orderNo - $index}} / {{write.name}} / {{write.created | amTimeAgo}} 작성 / {{write.updated | amTimeAgo}} 수정 / 조회 {{write.hits}} 
+      p {{vm.orderNo - $index}} / {{write.name}} / {{write.created | amTimeAgo}} 작성 / {{write.updated | amTimeAgo}} 수정 / 조회 {{write.hits}} 
         md-icon.fa.fa-lg(ng-show="write.fileCount" md-font-icon="fa-picture-o")
     md-divider
 
-pagination(page="page" changed="pageChanged(page)")
+pagination(page="vm.page" changed="vm.pageChanged(page)")

@@ -3,16 +3,16 @@ md-toolbar
     span(flex)
     md-button(md-no-ink aria-label="사용자수")
       md-icon.fa.fa-lg(md-font-icon="fa-list-alt")
-      | &nbsp;{{total}}
+      | &nbsp;{{vm.total}}
 
 md-list
-  md-list-item.md-2-line(ng-repeat="item in list" ng-click="userDetail(item._id)")
+  md-list-item.md-2-line(ng-repeat="item in vm.list" ng-click="vm.userDetail(item._id)")
     div.md-list-item-text
       h3 {{item.nickname}} 
         small.md-caption {{item._id}}
       p.md-caption
-        | {{orderNo - $index}} / Lv. {{item.level}} / 
+        | {{vm.orderNo - $index}} / Lv. {{item.level}} / 
         | {{item.email}} / {{item.logined | amTimeAgo}} 접속 / {{item.created | amTimeAgo}} 가입 
     md-divider
 
-pagination(page="page" changed="pageChanged(page)")
+pagination(page="vm.page" changed="vm.pageChanged(page)")

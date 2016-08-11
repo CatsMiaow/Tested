@@ -1,0 +1,56 @@
+/* Mysql Promise Example */
+
+import _ from 'lodash';
+import mysql from 'mysql';
+import { prototype as mysqlConnection } from 'mysql/lib/Connection';
+import { protytype as mysqlPool } from 'mysql/lib/Pool';
+import Promise from 'bluebird';
+import config from '.';
+
+Promise.promisifyAll(mysqlConnection);
+Promise.promisifyAll(mysqlPool);
+
+const using = Promise.using;
+const pool = mysql.createPool(config.mysql);
+
+function getConnection() {
+  return pool.getConnectionAsync().disposer(connection => {
+    connection.release();
+  });
+}
+
+function getTransaction() {
+  return pool.getConnectionAsync().then(
+    connection => connection.beginTransactionAsync().then(() => connection)
+  ).disposer((connection, promise) => {
+    const result = promise.isFulfilled() ? connection.commitAsync() : connection.rollbackAsync();
+    return result.finally(() => {
+      connection.release();
+    });
+  });
+}
+
+export default {
+  query(conn, sqlQuery, params) {
+    // 1. getQuery(conn, 'SQL', [params]); // 연결 쿼리
+    // 2. getQuery(null, 'SQL', [params]); // 연결 쿼리를 단일 쿼리로
+    // 3. getQuery('SQL', [params]); // 단일 쿼리
+
+    // 첫번째 인자가 SQL이라면 파라미터를 앞당김
+    const isShift = _.isString(conn);
+    const sql = isShift ? conn : sqlQuery;
+    const values = isShift ? sqlQuery : params;
+
+    if (_.isObject(conn)) { // 연결 객체라면
+      return conn.queryAsync(sql, values);
+    }
+    // 단일 쿼리일 때
+    return using(getConnection(), connection => connection.queryAsync(sql, values));
+  },
+  link(callback) {
+    return using(getConnection(), connection => callback(connection));
+  },
+  trans(callback) {
+    return using(getTransaction(), connection => callback(connection));
+  },
+};

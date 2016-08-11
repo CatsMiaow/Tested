@@ -1,24 +1,23 @@
-form(name="form" ng-submit="save()")
+form(name="form" ng-submit="vm.save()")
   md-input-container.md-block
     label 제목
-    input(type="text" name="title" ng-model="write.title" md-maxlength="50", required)
+    input(type="text" name="title" ng-model="vm.write.data.title" md-maxlength="50", required)
   md-input-container.md-block(md-no-float)
-    textarea(name="content" ui-tinymce ng-model="write.content" placeholder="내용을 입력하세요.", required)
+    textarea(name="content" ui-tinymce ng-model="vm.write.data.content" placeholder="내용을 입력하세요.", required)
   
   div(layout="column")  
-    md-button.md-raised(type="button" ngf-select ngf-change="onFileSelect($files)" ngf-multiple="true" ng-click="this.value=null" accept="image/*")
+    md-button.md-raised(type="button" ngf-select ngf-change="vm.onFileSelect($files)" ngf-multiple="true" ng-click="this.value=null" accept="image/*")
       md-icon.fa.fa-lg(md-font-icon="fa-upload")
       |  파일첨부
 
-    md-list(ng-show="write.files.length > 0")
+    md-list(ng-show="vm.write.data.files.length > 0")
       md-subheader.md-no-sticky 파일리스트
-      md-list-item.list-item-float(ng-repeat="file in write.files" ng-click="fileAppend($index, $event)")
+      md-list-item.list-item-float(ng-repeat="file in vm.write.data.files" ng-click="vm.fileAppend($index, $event)")
         img.md-avatar(ng-src="{{file.path+file.name}}" alt="{{file.orig}}")
         p.md-caption {{file.size / 1024 | number:1}}KB
-          md-progress-linear.md-accent(md-mode="determinate" ng-value="progress[$index]" ng-show="progress[$index] > -1")
-        md-icon.md-secondary.fa(md-font-icon="fa-times" ng-click="abort($index, $event)" aria-label="삭제")
+          md-progress-linear.md-accent(md-mode="determinate" ng-value="vm.progress[$index]" ng-show="vm.progress[$index] > -1")
+        md-icon.md-secondary.fa(md-font-icon="fa-times" ng-click="vm.abort($index, $event)" aria-label="삭제")
 
     br
-
-    md-button.md-raised.md-primary(type="submit" ng-disabled="form.$invalid" ng-show="beforeUnload") 확인
-    md-progress-linear.md-warn(md-mode="indeterminate" ng-hide="beforeUnload")
+    md-button.md-raised.md-primary(type="submit" ng-disabled="form.$invalid" ng-show="vm.beforeUnload") 확인
+    md-progress-linear.md-warn(md-mode="indeterminate" ng-hide="vm.beforeUnload")
