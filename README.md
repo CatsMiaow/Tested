@@ -1,7 +1,7 @@
 # Tested
 ECMAScript 6(as ES6/ES2015)으로 작성한 [MEAN](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) Stack 기반의 [Angular Material](https://material.angularjs.org) UI를 적용한 게시판 소스입니다.
-> DEMO http://tested.co.kr:8001<br/>
-> apiDoc http://irc.tested.co.kr/apidoc
+> DEMO http://dist.tested.co.kr<br/>
+> apiDoc http://discord.tested.kr/apidoc
 
 <br/>
 
