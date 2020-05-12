@@ -20,7 +20,7 @@
     "ng-file-upload": "^12.0.4",
     "nprogress": "^0.2.0",
     "socket.io-client": "^1.4.8",
-    "tinymce": "4.3.12"
+    "tinymce": "5.2.2"
   },
   "devDependencies": {},
   "scripts": {
